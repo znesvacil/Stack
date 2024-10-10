@@ -25,14 +25,12 @@ class dynamic_container {
 
     void d_alloc (size_t length) {
 
-        for (size_t i = 0; i < length; i++)  {m_data[m_length-i].~T();}       // for deleting container
+        for (size_t i = 0; i < length; i++)  {m_data[m_length+i].~T();
+            m_length--;
+            m_capacity--;                                 
+        }       
 
-        T::operator delete (m_length, m_capacity * sizeof(T));            // delete operator overload
-
-        delete[] m_data;                                               // index deleting
     }
-
-
 
 public:
 
@@ -59,9 +57,6 @@ public:
 
         return m_data[m_length];
     }
-
-
-
 };
 
 int main () {
